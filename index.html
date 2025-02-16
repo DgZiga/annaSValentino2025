@@ -3,8 +3,12 @@
 		<link rel="stylesheet" type="text/css" href="index.css">
     </head>
     <body>
-        <div class="star-container" style="width: 50px;">
-            <div class="star"></div>
+        <audio id="rewriteTheStarsAudio">
+            <source src="rewrite the stars.mp3" type="audio/mpeg">
+        </audio>
+        <div id="text">
+            <h1>It feels impossible</h1>
+            <h2>Say that it's possible</h2>
         </div>
     </body>
 </html>
@@ -13,15 +17,24 @@
 function s(q){return document.querySelectorAll(q)}
 
 function getStarHtml(maxSize){
+    var size = Math.ceil(Math.random()*maxSize); //in px
+    var animDur = Math.ceil(1/(size/maxSize) * 25)//smaller stars should move slower, so the higher size is the faster the animation needs to be
     return `
-        <div class="star-container" style="width: `+Math.floor(Math.random()*maxSize)+`px; top: `+Math.floor(Math.random()*100)+`svh; left: `+Math.floor(Math.random()*100)+`svw;">
-            <div class="star" style="filter: blur(`+((Math.floor(Math.random()*4))+2)+`px); animation-delay: `+Math.floor(Math.random()*3000)+`ms"></div>
+        <div class="star-container" style="
+            animation-duration: `+animDur+`s;
+            width: `+size+`px; 
+            top: `+Math.floor(Math.random()*200)+`svh; 
+            left: `+Math.floor(Math.random()*200)+`svw;">
+
+            <div class="star" style="
+                filter: blur(`+((Math.floor(Math.random()*4))+2)+`px); 
+                animation-delay: `+Math.floor(Math.random()*3000)+`ms"></div>
         </div>
     `;
 }
 var html=""
-for(var i=0; i<100; i++) {
+for(var i=0; i<300; i++) {
     html+=getStarHtml(10)
 }
-s("body")[0].innerHTML=html;
+s("body")[0].innerHTML+=html;
 </script>
