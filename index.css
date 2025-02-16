@@ -12,6 +12,12 @@ body{
     position: fixed;
     top: 20svh;
     text-align: center;
+    h1{
+        font-size: 4em;
+    }
+    h2{
+        font-size: 3.5em;
+    }
 }
 
 
@@ -39,4 +45,8 @@ body{
       transform: translateY(-100svh)
         translateX(-100svw);
     }
-  }
+}
+@keyframes disappear {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
