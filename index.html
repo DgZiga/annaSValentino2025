@@ -1,0 +1,27 @@
+<html>
+    <head>
+		<link rel="stylesheet" type="text/css" href="index.css">
+    </head>
+    <body>
+        <div class="star-container" style="width: 50px;">
+            <div class="star"></div>
+        </div>
+    </body>
+</html>
+
+<script>
+function s(q){return document.querySelectorAll(q)}
+
+function getStarHtml(maxSize){
+    return `
+        <div class="star-container" style="width: `+Math.floor(Math.random()*maxSize)+`px; top: `+Math.floor(Math.random()*100)+`svh; left: `+Math.floor(Math.random()*100)+`svw;">
+            <div class="star" style="filter: blur(`+((Math.floor(Math.random()*4))+2)+`px); animation-delay: `+Math.floor(Math.random()*3000)+`ms"></div>
+        </div>
+    `;
+}
+var html=""
+for(var i=0; i<100; i++) {
+    html+=getStarHtml(10)
+}
+s("body")[0].innerHTML=html;
+</script>
