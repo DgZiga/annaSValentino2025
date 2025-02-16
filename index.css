@@ -22,10 +22,10 @@ body{
     top: 20svh;
     text-align: center;
     h1{
-        font-size: 4em;
+        font-size: 2.5em;
     }
     h2{
-        font-size: 3.5em;
+        font-size: 2em;
     }
 }
 
@@ -58,4 +58,10 @@ body{
 @keyframes disappear {
     from {opacity: 1;}
     to {opacity: 0;}
+}
+.pausedAnim{
+    -webkit-animation-play-state:paused;
+    -moz-animation-play-state:paused;
+    -o-animation-play-state:paused; 
+    animation-play-state:paused;
 }

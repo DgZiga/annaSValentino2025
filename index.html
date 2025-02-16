@@ -44,6 +44,10 @@ s("#container")[0].innerHTML+=html;
 function itsPossible(){
     s("#text")[0].style.animation="disappear 1s linear forwards"
     //s("#rewriteTheStarsAudio")[0].play()
+    s(".star-container").forEach(div=>{
+        div.classList.add("pausedAnim");
+    });
+
 }
 
 </script>
