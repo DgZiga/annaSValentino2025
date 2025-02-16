@@ -4,11 +4,11 @@
     </head>
     <body>
         <audio id="rewriteTheStarsAudio">
-            <source src="rewrite the stars.mp3" type="audio/mpeg">
+            <source src="chorus.mp3" type="audio/mpeg">
         </audio>
         <div id="text">
             <h1>It feels impossible</h1>
-            <h2>Say that it's possible</h2>
+            <h2 onclick="itsPossible()"">Say that it's possible</h2>
         </div>
     </body>
 </html>
@@ -37,4 +37,9 @@ for(var i=0; i<300; i++) {
     html+=getStarHtml(10)
 }
 s("body")[0].innerHTML+=html;
+
+function itsPossible(){
+    s("#rewriteTheStarsAudio")[0].play()
+}
+
 </script>
