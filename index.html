@@ -2,6 +2,7 @@
 <html>
     <head>
 		<link rel="stylesheet" type="text/css" href="index.css">
+        <script src="bezier.js"></script>
     </head>
     <body>
         <div id="container">
@@ -20,23 +21,82 @@
 function s(q){return document.querySelectorAll(q)}
 
 function getStarHtml(maxSize){
-    var size = Math.ceil(Math.random()*maxSize); //in px
+    var size = Math.ceil(Math.random()*maxSize)+2; //in px
     var animDur = Math.ceil(1/(size/maxSize) * 25)//smaller stars should move slower, so the higher size is the faster the animation needs to be
     return `
         <div class="star-container" style="
             animation-duration: `+animDur+`s;
             width: `+size+`px; 
-            top: `+Math.floor(Math.random()*200)+`svh; 
-            left: `+Math.floor(Math.random()*200)+`svw;">
+            transform: 
+                translateY(`+Math.floor(Math.random()*100)+`svh) 
+                translateX(`+Math.floor(Math.random()*100)+`svw);">
 
             <div class="star" style="
-                filter: blur(`+((Math.floor(Math.random()*4))+2)+`px); 
+                filter: blur(`+((Math.floor(Math.random()*3))+2)+`px); 
                 animation-delay: `+Math.floor(Math.random()*3000)+`ms"></div>
         </div>
     `;
 }
+
+function getPosForCurve(positions, from, to){
+
+}
+
+//build positions
+const positions =[]
+/*
+//I
+for(var i=45; i<55; i++){positions.push({x:  i, y: 5})}
+for(var i= 5; i<28; i++){positions.push({x: 50, y: i})}
+for(var i=45; i<55; i++){positions.push({x:  i, y: 28})}
+//L
+for(var i=38; i<61; i++){positions.push({x:  34, y: i})}
+for(var i=34; i<40; i++){positions.push({x:  i, y: 61})}
+//o
+for(var i=50; i<61; i++){positions.push({x: 42, y: i})}
+for(var i=50; i<61; i++){positions.push({x: 49, y: i})}
+for(var i=42; i<49; i++){positions.push({x:  i, y: 61})}
+for(var i=42; i<49; i++){positions.push({x:  i, y: 50})}
+//v
+*/
+//T
+for(var i=38; i<48; i++){positions.push({x:  i, y: 25});positions.push({x:  i, y: 25})}
+for(var i=25; i<40; i++){positions.push({x: 43, y:  i});positions.push({x: 43, y:  i})}
+//i
+for(var i=33; i<40; i++){positions.push({x: 52, y: i});positions.push({x: 52, y: i})}
+positions.push({x: 52, y: 25})
+positions.push({x: 52, y: 25})
+//A
+BezierCurve([{x:30,y:62},{x:35,y:45},{x:40,y:62}]).forEach(p=>{positions.push(p);})
+//for(var i=30; i<40; i++){positions.push({x:  i, y: 55});positions.push({x:  i, y: 55})}
+for(var i=30; i<40; i++){positions.push({x:  i, y: 62});positions.push({x:  i, y: 62})}
+for(var i=62; i<70; i++){positions.push({x: 30, y:  i});positions.push({x: 30, y:  i})}
+for(var i=62; i<70; i++){positions.push({x: 40, y:  i});positions.push({x: 40, y:  i})}
+//m
+for(var i=62; i<70; i++){positions.push({x: 45, y:  i});positions.push({x: 45, y:  i})}
+BezierCurve([{x:45,y:70},{x:47.5,y:60},{x:50,y:70}]).forEach(p=>{positions.push(p);})
+BezierCurve([{x:50,y:70},{x:52.5,y:60},{x:55,y:70}]).forEach(p=>{positions.push(p);})
+//o
+const stepsNo = 40;
+const stepAngle = Math.PI/2/stepsNo;
+const circleMidX = 65
+const circleMidY = 65
+const circleRadius = 5;
+var angle = 0;
+for(var i=0; i<stepsNo; i++){
+    var cos = Math.cos(angle) * circleRadius;
+    var sin = Math.sin(angle) * circleRadius;
+    positions.push({x: circleMidX+cos, y:  circleMidY+sin})
+    positions.push({x: circleMidX-cos, y:  circleMidY+sin})
+    positions.push({x: circleMidX+cos, y:  circleMidY-sin})
+    positions.push({x: circleMidX-cos, y:  circleMidY-sin})
+    angle+=stepAngle;
+}
+
+var starsNo = Math.floor(positions.length *1.25)
+console.log("creating "+starsNo+" stars")
 var html=""
-for(var i=0; i<300; i++) {
+for(var i=0; i<starsNo; i++) {
     html+=getStarHtml(10)
 }
 s("#container")[0].innerHTML+=html;
@@ -47,6 +107,12 @@ function itsPossible(){
     s(".star-container").forEach(div=>{
         div.classList.add("pausedAnim");
     });
+
+    const stars = s(".star-container")
+    for(var i=0; i<positions.length; i++){
+        stars[i].style.transform = "translate("+positions[i].x+"svw, "+positions[i].y+"svh)"
+        stars[i].children[0].style.backgroundColor="yellow"
+    }
 
 }
 
