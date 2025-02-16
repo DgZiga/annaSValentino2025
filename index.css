@@ -1,9 +1,18 @@
 body{
+    background-color: black;
     background: linear-gradient(180deg, #02030A, #0A0F1E, #161B33);
     margin: 0;
     padding: 0;
     overflow: hidden;
-    position: relative;
+}
+
+#container {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100svw;
+    height: 100svh;
+    position: relative
 }
 
 #text{

@@ -4,12 +4,14 @@
 		<link rel="stylesheet" type="text/css" href="index.css">
     </head>
     <body>
-        <audio id="rewriteTheStarsAudio">
-            <source src="chorus.mp3" type="audio/mpeg">
-        </audio>
-        <div id="text">
-            <h1>It feels impossible</h1>
-            <h2 onclick="itsPossible()"">Say that it's possible?</h2>
+        <div id="container">
+            <audio id="rewriteTheStarsAudio">
+                <source src="chorus.mp3" type="audio/mpeg">
+            </audio>
+            <div id="text">
+                <h1>It feels impossible</h1>
+                <h2 onclick="itsPossible()"">Say that it's possible?</h2>
+            </div>
         </div>
     </body>
 </html>
@@ -37,7 +39,7 @@ var html=""
 for(var i=0; i<300; i++) {
     html+=getStarHtml(10)
 }
-s("body")[0].innerHTML+=html;
+s("#container")[0].innerHTML+=html;
 
 function itsPossible(){
     s("#text")[0].style.animation="disappear 1s linear forwards"
