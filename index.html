@@ -49,18 +49,20 @@ for(var i=0; i<100; i++) {
 }
 s("#container")[0].innerHTML+=html;
 
+var speedingUp = false;
 var speedUpCtr = 0;
 const speedUpLimit = 5;
-function speedUpAnim(){
-    if(speedUpCtr++ >= speedUpLimit){
-        return
-    }
-    addSpeed = addSpeed*1+0.2
-    setTimeout(speedUpAnim, 300);
-}
-
 var addSpeed = 0;
+
 function animateStars(){
+    if(speedingUp){
+        if(speedUpCtr++ >= speedUpLimit){
+            speedingUp = false
+        } else {
+            addSpeed = addSpeed*1+0.2
+        }
+    }
+    }
     s(".star-container").forEach(div=>{
         let currentX = div.style.left;
         currentX = currentX.substr(0, currentX.length-3)
@@ -88,7 +90,7 @@ requestAnimationFrame(animateStars);
 function itsPossible(){
     s("#text")[0].style.animation="disappear 1s linear forwards"
     //s("#rewriteTheStarsAudio")[0].play()
-    speedUpAnim()
+    speedingUp = true
 
     var ctx = s("#constellationCanvas")[0].getContext("2d")
     ctx.strokeStyle = "white";
@@ -120,7 +122,7 @@ function itsPossible(){
     ctx.lineTo(775, 650);
     ctx.lineTo(725, 700);
     ctx.lineTo(675, 650);
-    //ctx.stroke();
+    ctx.stroke();
 }
 
 </script>
