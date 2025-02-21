@@ -44,25 +44,21 @@ function getStarHtml(maxSize, top=undefined, left=undefined){
     `;
 }
 var html=""
-for(var i=0; i<200; i++) {
+for(var i=0; i<100; i++) {
     html+=getStarHtml(10)
 }
 s("#container")[0].innerHTML+=html;
 
-const speeds=['--fast-anim','--norm-anim','--slow-anim']
+var speedUpCtr = 0;
+const speedUpLimit = 5;
 function speedUpAnim(){
-    var needsToDo = false;
-    for(speed of speeds){
-        var animDur = getComputedStyle(s(":root")[0]).getPropertyValue(speed);
-        var newDur = (animDur.substr(0, animDur.length-1))-1
-        if(newDur > 0){
-            needsToDo=true
-            s(":root")[0].style.setProperty(speed, newDur+"s")
-        }
+    if(speedUpCtr++ >= speedUpLimit){
+        return
     }
-    if(needsToDo){
-        setTimeout(speedUpAnim, 200);
-    }
+    s(".star-container").forEach(div=>{
+        div.dataset.speed = div.dataset.speed*1+0.2
+    })
+    setTimeout(speedUpAnim, 300);
 }
 
 function animateStars(){
