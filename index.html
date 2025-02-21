@@ -9,7 +9,7 @@
                 <span>Our story began six long years ago</span>
             </div>
             <div id="spanContainer2">
-                <span>With baloon bonks</span><br/><img src="baloon.png" id="baloon" />
+                <span>With baloon bonks on the head</span><br/><img src="baloon.png" id="baloon" />
             </div>
             <div id="spanContainer3">
                 <span>And untied shoelaces</span><br/><img src="untiedshoes.png" id="untiedShoes" />
@@ -27,16 +27,17 @@
                 <span>It felt impossible</span>
             </div>
             <div id="sayThat">
-                <span onclick="itsPossible()">Say that it's possible?</span>
+                <span>Say that its possible</span>
             </div>
             <img src="mountains.png" id="mountains" />
             <div id="butThereWereMountains">
                 <span>But there were mountains</span>
             </div>
             <div id="andThereWereThose">
-                <span>And there were those that we couldn't walk through</span>
+                <span>And there were those that we couldnt walk through</span>
             </div>
             <img src="clickMe.png" class="clickMe" id="clickMe2" onclick="lowerMountains()">
+            <img src="clickMe.png" class="clickMe" id="clickMe3" style="display:none" onclick="itsPossible()">
         </div>
     </body>
 </html>
@@ -74,6 +75,7 @@ function turnPageIntro(){
 
 function lowerMountains(){
     s("#clickMe2")[0].style.opacity='0'
+    s("#clickMe3")[0].style.display='none'
     s("#andThereWereThose")[0].style.opacity='0'
     s("#mountains")[0].style.bottom='-35svh'
     s("#itFelt")[0].style.opacity='1'
@@ -83,6 +85,11 @@ function lowerMountains(){
     setTimeout(() => {
         s("#sayThat")[0].style.opacity='1'
     }, 5000);
+    setTimeout(() => {
+        s("#clickMe3")[0].style.display='block'
+        s("#clickMe3")[0].style.opacity='1'
+    }, 6000);
+    
 }
 
 function getStarHtml(maxSize, top=undefined, left=undefined, useMaxSize=false){
@@ -270,7 +277,8 @@ requestAnimationFrame(animateStars);
 
 function itsPossible(){
     s("#rewriteTheStarsAudio")[0].play()
-    s("#sayThat")[0].style.animation="disappear 1s linear forwards"
+    s("#sayThat")[0].style.opacity='0'
+    s("#clickMe3")[0].style.opacity='0'
     setTimeout(() => {
         speedingUp = true
     }, 1200);
