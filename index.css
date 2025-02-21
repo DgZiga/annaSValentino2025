@@ -10,6 +10,7 @@ body{
     margin: 0;
     padding: 0;
     overflow: hidden;
+    color: white;
 }
 .tiAmoStar{
     visibility: hidden;
@@ -25,6 +26,38 @@ body{
     z-index: 0;
 }
 
+#mountains{
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 999;
+    transition: bottom 2s ease-in-out;
+}
+#butThereWereMountains{
+    transition: opacity 2s;
+    margin: 13svh auto;
+    margin-bottom: 0;
+    width: 70svw;
+    left: 15svw;
+    bottom: 30svh;
+    position: fixed;
+    z-index: 9999;
+    text-align: center;
+}
+#andThereWereThose{
+    opacity: 0;
+    transition: opacity 2s;
+    margin: 13svh auto;
+    margin-bottom: 0;
+    width: 70svw;
+    left: 15svw;
+    bottom: 30svh;
+    position: fixed;
+    z-index: 9999;
+    text-align: center;
+}
+
 #constellationCanvas{
     position: absolute;
     margin: 0;
@@ -34,18 +67,25 @@ body{
     height: 100svh;
 }
 
-#text{
-    color: white;
-    width: 100svw;
+#itFelt{
+    opacity: 0;
+    width: 70svw;
+    position: absolute;
+    top: 20svh;
+    left: 15svw;
+    text-align: center;
+    font-size: 2em;
+    transition: opacity 2s;
+}
+#sayThat{
+    opacity: 0;
+    width: 70svw;
+    left: 15svw;
     position: absolute;
     top: 20svh;
     text-align: center;
-    h1{
-        font-size: 2.5em;
-    }
-    h2{
-        font-size: 2em;
-    }
+    font-size: 2em;
+    transition: opacity 2s;
 }
 
 
@@ -105,6 +145,7 @@ body{
     text-align: center;
     color: white;
     font-size: 1.5em;
+    transition: transform 1s;
 
     #spanContainer1{
         opacity: 0;
@@ -133,20 +174,23 @@ body{
     img{
         width: 25%;
     }
-    #clickMe{
-        opacity: 0;
-        transition: opacity 2s;
-        position: fixed;
-        bottom: 3svh;
-        right: 5svw;
-    }
     #baloon{
-        animation: sharpTurnUp 5s infinite ease-in-out;
+        animation: sharpTurnUp 3s infinite ease-in-out;
     }
     #untiedShoes{
         animation: randomFloat 8s infinite ease-in-out alternate
     }
 }
+.clickMe{
+    opacity: 0;
+    transition: opacity 2s;
+    position: fixed;
+    bottom: 3svh;
+    right: 5svw;
+    width: 25%;
+    z-index: 9999;
+}
+
 @keyframes randomFloat {
     0% { transform: translate(0, 0) rotate(0deg); }
     25% { transform: translate(-10px, 5px) rotate(2deg); }

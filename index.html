@@ -6,15 +6,15 @@
     <body>
         <div id="introCard">
             <div id="spanContainer1">
-                <span>Our story begins six long years ago</span>
+                <span>Our story began six long years ago</span>
             </div>
             <div id="spanContainer2">
-                <span>With baloon bonks</span><br/><img src="baloon.png" id="baloon">
+                <span>With baloon bonks</span><br/><img src="baloon.png" id="baloon" />
             </div>
             <div id="spanContainer3">
-                <span>And untied shoelaces</span><br/><img src="untiedshoes.png" id="untiedShoes">
+                <span>And untied shoelaces</span><br/><img src="untiedshoes.png" id="untiedShoes" />
             </div>
-            <img src="clickMe.png" id="clickMe" onclick="turnPageIntro()">
+            <img src="clickMe.png" id="clickMe" class="clickMe" onclick="turnPageIntro()">
         </div>
 
 
@@ -23,10 +23,20 @@
             <audio id="rewriteTheStarsAudio">
                 <source src="chorus.mp3" type="audio/mpeg">
             </audio>
-            <div id="text">
-                <h1>It feels impossible</h1>
-                <h2 onclick="itsPossible()"">Say that it's possible?</h2>
+            <div id="itFelt">
+                <span>It felt impossible</span>
             </div>
+            <div id="sayThat">
+                <span onclick="itsPossible()">Say that it's possible?</span>
+            </div>
+            <img src="mountains.png" id="mountains" />
+            <div id="butThereWereMountains">
+                <span>But there were mountains</span>
+            </div>
+            <div id="andThereWereThose">
+                <span>And there were those that we couldn't walk through</span>
+            </div>
+            <img src="clickMe.png" class="clickMe" id="clickMe2" onclick="lowerMountains()">
         </div>
     </body>
 </html>
@@ -49,17 +59,43 @@ window.onload = function(){
     }, 7000);
 }
 
+function turnPageIntro(){
+    s("#introCard")[0].style="transform: rotateY(90deg); transform-origin:center left"
+    setTimeout(() => {
+        s("#butThereWereMountains")[0].style.opacity='0'
+    }, 4000);
+    setTimeout(() => {
+        s("#andThereWereThose")[0].style.opacity='1'
+    }, 6000);
+    setTimeout(() => {
+        s("#clickMe2")[0].style.opacity='1'
+    }, 7000);
+}
+
+function lowerMountains(){
+    s("#clickMe2")[0].style.opacity='0'
+    s("#andThereWereThose")[0].style.opacity='0'
+    s("#mountains")[0].style.bottom='-35svh'
+    s("#itFelt")[0].style.opacity='1'
+    setTimeout(() => {
+        s("#itFelt")[0].style.opacity='0'
+    }, 3000);
+    setTimeout(() => {
+        s("#sayThat")[0].style.opacity='1'
+    }, 5000);
+}
+
 function getStarHtml(maxSize, top=undefined, left=undefined, useMaxSize=false){
     if(top!==undefined){top-=1.7}
     if(left!==undefined){left-=2}
     var rand = useMaxSize ? 0 : Math.random();
     var size = useMaxSize ? maxSize : Math.ceil(rand*maxSize); //in px
     if(rand < 0.3){
-        var speed = '0.1'
+        var speed = '0.05'
     } else if (rand > 0.6){
-        var speed = '0.15'
+        var speed = '0.1'
     } else {
-        var speed = '0.25'
+        var speed = '0.07'
     }
     //var animDur = Math.ceil(1/(size/maxSize) * 25)//smaller stars should move slower, so the higher size is the faster the animation needs to be
     return `
@@ -104,12 +140,11 @@ function animateStars(){
         }
     }
     if(windingDown){
-        stopStarsMove=true;
+        addSpeed=0;
         drawTiAmo();
-        return;
     }
 
-    s(".star-container").forEach(div=>{
+    s(".star-container:not(.tiAmoStar)").forEach(div=>{
         let currentX = div.style.left;
         currentX = currentX.substr(0, currentX.length-3)
         let currentY = div.style.top;
@@ -129,25 +164,6 @@ function animateStars(){
         div.style.top  = newY + "svh"; 
     });
 
-    s("#constellationCanvas").forEach(div=>{
-        let currentX = div.style.left;
-        currentX = currentX.substr(0, currentX.length-3)
-        let currentY = div.style.top;
-        currentY = currentY.substr(0, currentY.length-3)
-
-        let speed = 0//0.1
-
-        let newX = currentX - speed;
-        if (newX < 0) {
-            newX = 100;
-        }
-        let newY = currentY - speed;
-        if (newY < 0) {
-            newY = 100;
-        }
-        div.style.left = newX + "svw"; 
-        div.style.top  = newY + "svh"; 
-    });
     requestAnimationFrame(animateStars); // Keep the animation running
 }
 
@@ -253,8 +269,8 @@ function drawTiAmo(){
 requestAnimationFrame(animateStars);
 
 function itsPossible(){
-    //s("#rewriteTheStarsAudio")[0].play()
-    s("#text")[0].style.animation="disappear 1s linear forwards"
+    s("#rewriteTheStarsAudio")[0].play()
+    s("#sayThat")[0].style.animation="disappear 1s linear forwards"
     setTimeout(() => {
         speedingUp = true
     }, 1200);
