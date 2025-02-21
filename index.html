@@ -55,12 +55,11 @@ function speedUpAnim(){
     if(speedUpCtr++ >= speedUpLimit){
         return
     }
-    s(".star-container").forEach(div=>{
-        div.dataset.speed = div.dataset.speed*1+0.2
-    })
+    addSpeed = addSpeed*1+0.2
     setTimeout(speedUpAnim, 300);
 }
 
+var addSpeed = 0;
 function animateStars(){
     s(".star-container").forEach(div=>{
         let currentX = div.style.left;
@@ -68,7 +67,7 @@ function animateStars(){
         let currentY = div.style.top;
         currentY = currentY.substr(0, currentY.length-3)
 
-        let speed = div.dataset.speed;
+        let speed = (div.dataset.speed*1+addSpeed*1);
 
         let newX = currentX - speed;
         if (newX < 0) {
@@ -89,7 +88,7 @@ requestAnimationFrame(animateStars);
 function itsPossible(){
     s("#text")[0].style.animation="disappear 1s linear forwards"
     //s("#rewriteTheStarsAudio")[0].play()
-    speedUpAnim(s(".star-container"))
+    speedUpAnim()
 
     var ctx = s("#constellationCanvas")[0].getContext("2d")
     ctx.strokeStyle = "white";
