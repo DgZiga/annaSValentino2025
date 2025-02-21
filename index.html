@@ -5,6 +5,7 @@
     </head>
     <body>
         <div id="container">
+            <canvas id="constellationCanvas" width="1000" height="1000"></canvas>
             <audio id="rewriteTheStarsAudio">
                 <source src="chorus.mp3" type="audio/mpeg">
             </audio>
@@ -19,15 +20,24 @@
 <script>
 function s(q){return document.querySelectorAll(q)}
 
-function getStarHtml(maxSize){
-    var size = Math.ceil(Math.random()*maxSize); //in px
-    var animDur = Math.ceil(1/(size/maxSize) * 25)//smaller stars should move slower, so the higher size is the faster the animation needs to be
+function getStarHtml(maxSize, top=undefined, left=undefined){
+    var rand = Math.random();
+    var size = Math.ceil(rand*maxSize); //in px
+    var animDur = '--norm-anim'
+    if(rand < 0.3){
+        var animDur = '--slow-anim'
+    } else if (rand > 0.6){
+        var animDur = '--fast-anim'
+    } else {
+        var animDur = '--norm-anim'
+    }
+    //var animDur = Math.ceil(1/(size/maxSize) * 25)//smaller stars should move slower, so the higher size is the faster the animation needs to be
     return `
         <div class="star-container" style="
-            animation-duration: `+animDur+`s;
+            animation-duration: var(`+animDur+`);
             width: `+size+`px; 
-            top: `+Math.floor(Math.random()*200)+`svh; 
-            left: `+Math.floor(Math.random()*200)+`svw;">
+            top: ` +(top ===undefined ? Math.floor(Math.random()*150) : top )+`svh; 
+            left: `+(left===undefined ? Math.floor(Math.random()*150) : left)+`svw;">
 
             <div class="star" style="
                 filter: blur(`+((Math.floor(Math.random()*4))+2)+`px); 
@@ -36,18 +46,76 @@ function getStarHtml(maxSize){
     `;
 }
 var html=""
-for(var i=0; i<300; i++) {
+for(var i=0; i<200; i++) {
     html+=getStarHtml(10)
 }
 s("#container")[0].innerHTML+=html;
 
+const speeds=['--fast-anim','--norm-anim','--slow-anim']
+function speedUpAnim(){
+    var needsToDo = false;
+    for(speed of speeds){
+        var animDur = getComputedStyle(s(":root")[0]).getPropertyValue(speed);
+        var newDur = (animDur.substr(0, animDur.length-1))-1
+        if(newDur > 0){
+            needsToDo=true
+            s(":root")[0].style.setProperty(speed, newDur+"s")
+        }
+    }
+    if(needsToDo){
+        setTimeout(speedUpAnim, 200);
+    }
+}
+
+function animateStars(){
+    s(".star-container").forEach(div=>{
+        let currentX = parseFloat(div.style.left);
+        div.style.left = (currentX - speed) + "px"; // Move left
+
+        // If box moves completely out of the left side, wrap it to the right
+        if (currentX + boxWidth < 0) {
+            let maxRight = Math.max(...Array.from(boxes).map(b => parseFloat(b.style.left))); // Find the rightmost box
+            box.style.left = maxRight + boxWidth + 10 + "px"; // Position it after the rightmost box
+        }
+    });
+}
+
 function itsPossible(){
     s("#text")[0].style.animation="disappear 1s linear forwards"
     //s("#rewriteTheStarsAudio")[0].play()
-    s(".star-container").forEach(div=>{
-        div.classList.add("pausedAnim");
-    });
+    speedUpAnim(s(".star-container"))
 
+    var ctx = s("#constellationCanvas")[0].getContext("2d")
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    //T
+    ctx.moveTo(280, 250);
+    ctx.lineTo(480, 250);
+    ctx.moveTo(380, 250);
+    ctx.lineTo(380, 400);
+    //i
+    ctx.moveTo(610, 330);
+    ctx.lineTo(610, 400);
+    //A
+    ctx.moveTo(150, 700);
+    ctx.lineTo(250, 500);
+    ctx.lineTo(350, 700);
+    ctx.moveTo(200, 600);
+    ctx.lineTo(300, 600);
+    //m
+    ctx.moveTo(420, 700);
+    ctx.lineTo(420, 600);
+    ctx.lineTo(500, 650);
+    ctx.lineTo(580, 600);
+    ctx.lineTo(580, 700);
+    //o
+    ctx.moveTo(675, 650);
+    ctx.lineTo(725, 600);
+    ctx.lineTo(775, 650);
+    ctx.lineTo(725, 700);
+    ctx.lineTo(675, 650);
+    ctx.stroke();
 }
 
 </script>

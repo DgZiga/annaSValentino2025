@@ -1,3 +1,9 @@
+:root{
+    --fast-anim: 20s;
+    --norm-anim: 40s;
+    --slow-anim: 60s;
+}
+
 body{
     background-color: black;
     background: linear-gradient(180deg, #02030A, #0A0F1E, #161B33);
@@ -15,10 +21,19 @@ body{
     position: relative
 }
 
+#constellationCanvas{
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    animation: moveStars linear infinite;
+    width: 100svw;
+    height: 100svh;
+}
+
 #text{
     color: white;
     width: 100svw;
-    position: fixed;
+    position: absolute;
     top: 20svh;
     text-align: center;
     h1{
@@ -33,7 +48,7 @@ body{
 .star-container{
     position: absolute;
     aspect-ratio: 1;
-    animation: moveStars linear infinite;
+    animation: moveStars linear infinite forwards;
 }
 .star{
     margin: 0 auto;
@@ -51,8 +66,8 @@ body{
       transform: translateY(0px);
     }
     to {
-      transform: translateY(-100svh)
-        translateX(-100svw);
+      transform: translateY(-50svh)
+        translateX(-50svw);
     }
 }
 @keyframes disappear {
@@ -64,4 +79,7 @@ body{
     -moz-animation-play-state:paused;
     -o-animation-play-state:paused; 
     animation-play-state:paused;
+}
+.fastAnim{
+    animation-duration: 200ms;
 }
