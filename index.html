@@ -5,11 +5,16 @@
     </head>
     <body>
         <div id="introCard">
-            <div id="spanContainer">
-                <span>Our history begins six long years ago</span>
+            <div id="spanContainer1">
+                <span>Our story begins six long years ago</span>
             </div>
-            <img src="untiedshoes.webp" id="untiedShoes">
-            <img src="baloon.png" id="baloon">
+            <div id="spanContainer2">
+                <span>With baloon bonks</span><br/><img src="baloon.png" id="baloon">
+            </div>
+            <div id="spanContainer3">
+                <span>And untied shoelaces</span><br/><img src="untiedshoes.png" id="untiedShoes">
+            </div>
+            <img src="clickMe.png" id="clickMe" onclick="turnPageIntro()">
         </div>
 
 
@@ -28,6 +33,21 @@
 
 <script>
 function s(q){return document.querySelectorAll(q)}
+
+window.onload = function(){
+    setTimeout(() => {
+        s("#spanContainer1")[0].style.opacity='1'
+    }, 1000);
+    setTimeout(() => {
+        s("#spanContainer2")[0].style.opacity='1'
+    }, 3000);
+    setTimeout(() => {
+        s("#spanContainer3")[0].style.opacity='1'
+    }, 5000);
+    setTimeout(() => {
+        s("#clickMe")[0].style.opacity='1'
+    }, 7000);
+}
 
 function getStarHtml(maxSize, top=undefined, left=undefined, useMaxSize=false){
     if(top!==undefined){top-=1.7}

@@ -100,29 +100,62 @@ body{
     left: 0;
     width: 100svw;
     height: 100svh;
-    background-color: #292929;
+    background: linear-gradient(180deg, #02030A, #292929);
     z-index: 10;
     text-align: center;
+    color: white;
+    font-size: 1.5em;
 
-    #spanContainer{
-        margin: 20svh auto;
+    #spanContainer1{
+        opacity: 0;
+        transition: opacity 2s;
+        margin: 13svh auto;
+        margin-bottom: 0;
         width: 70%;
-        span{
-            color: white;
-            font-size: 1.5em;
-        }
+    }
+    #spanContainer2{
+        opacity: 0;
+        transition: opacity 2s;
+        margin: 15svh auto;
+        margin-bottom: 0;
+        width: 70%;
+        text-align: center;
+    }
+    #spanContainer3{
+        opacity: 0;
+        transition: opacity 2s;
+        text-align: center;
+        margin: 10svh auto;
+        margin-bottom: 0;
+        width: 70%;
     }
 
     img{
-        position: fixed;
         width: 25%;
     }
+    #clickMe{
+        opacity: 0;
+        transition: opacity 2s;
+        position: fixed;
+        bottom: 3svh;
+        right: 5svw;
+    }
     #baloon{
-        top: 60svh;
-        left: 13svw;
+        animation: sharpTurnUp 5s infinite ease-in-out;
     }
     #untiedShoes{
-        top: 60svh;
-        right: 13svw;
+        animation: randomFloat 8s infinite ease-in-out alternate
     }
+}
+@keyframes randomFloat {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-10px, 5px) rotate(2deg); }
+    50% { transform: translate(8px, -10px) rotate(-3deg); }
+    75% { transform: translate(-5px, 8px) rotate(1deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes sharpTurnUp {
+    0% { transform: translateY(0) rotate(0deg); }
+    10% { transform: rotate(90deg); } /* Sharp turn */
+    100% { transform: rotate(0deg); } /* Slowly return */
 }
