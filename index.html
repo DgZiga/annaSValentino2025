@@ -23,21 +23,19 @@ function s(q){return document.querySelectorAll(q)}
 function getStarHtml(maxSize, top=undefined, left=undefined){
     var rand = Math.random();
     var size = Math.ceil(rand*maxSize); //in px
-    var animDur = '--norm-anim'
     if(rand < 0.3){
-        var animDur = '--slow-anim'
+        var speed = '0.1'
     } else if (rand > 0.6){
-        var animDur = '--fast-anim'
+        var speed = '0.15'
     } else {
-        var animDur = '--norm-anim'
+        var speed = '0.25'
     }
     //var animDur = Math.ceil(1/(size/maxSize) * 25)//smaller stars should move slower, so the higher size is the faster the animation needs to be
     return `
-        <div class="star-container" style="
-            animation-duration: var(`+animDur+`);
+        <div class="star-container" data-speed="`+speed+`" style="
             width: `+size+`px; 
-            top: ` +(top ===undefined ? Math.floor(Math.random()*150) : top )+`svh; 
-            left: `+(left===undefined ? Math.floor(Math.random()*150) : left)+`svw;">
+            top: ` +(top ===undefined ? Math.floor(Math.random()*100) : top )+`svh; 
+            left: `+(left===undefined ? Math.floor(Math.random()*100) : left)+`svw;">
 
             <div class="star" style="
                 filter: blur(`+((Math.floor(Math.random()*4))+2)+`px); 
@@ -69,16 +67,28 @@ function speedUpAnim(){
 
 function animateStars(){
     s(".star-container").forEach(div=>{
-        let currentX = parseFloat(div.style.left);
-        div.style.left = (currentX - speed) + "px"; // Move left
+        let currentX = div.style.left;
+        currentX = currentX.substr(0, currentX.length-3)
+        let currentY = div.style.top;
+        currentY = currentY.substr(0, currentY.length-3)
 
-        // If box moves completely out of the left side, wrap it to the right
-        if (currentX + boxWidth < 0) {
-            let maxRight = Math.max(...Array.from(boxes).map(b => parseFloat(b.style.left))); // Find the rightmost box
-            box.style.left = maxRight + boxWidth + 10 + "px"; // Position it after the rightmost box
+        let speed = div.dataset.speed;
+
+        let newX = currentX - speed;
+        if (newX < 0) {
+            newX = 100;
         }
+        let newY = currentY - speed;
+        if (newY < 0) {
+            newY = 100;
+        }
+        div.style.left = newX + "svw"; 
+        div.style.top  = newY + "svh"; 
     });
+    requestAnimationFrame(animateStars); // Keep the animation running
 }
+
+requestAnimationFrame(animateStars);
 
 function itsPossible(){
     s("#text")[0].style.animation="disappear 1s linear forwards"

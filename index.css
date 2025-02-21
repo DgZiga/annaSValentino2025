@@ -48,7 +48,6 @@ body{
 .star-container{
     position: absolute;
     aspect-ratio: 1;
-    animation: moveStars linear infinite forwards;
 }
 .star{
     margin: 0 auto;
