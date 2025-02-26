@@ -93,8 +93,6 @@ function lowerMountains(){
 }
 
 function getStarHtml(maxSize, top=undefined, left=undefined, useMaxSize=false){
-    if(top!==undefined){top-=1.7}
-    if(left!==undefined){left-=2}
     var rand = useMaxSize ? 0 : Math.random();
     var size = useMaxSize ? maxSize : Math.ceil(rand*maxSize); //in px
     if(rand < 0.3){
